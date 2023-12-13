@@ -73,4 +73,4 @@ Cada Endpoint debe incluir el token de acceso en el encabezado de la solicitud.
 
 ## Notas
 - La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula y un carácter especial.
-- Adjunto un Word Con imagenes de la documentacion de la API, además de un diagrama de clases y un diagrama de secuencia.
+- Adjunto un Word Con imagenes de la documentacion de la API, además de un diagrama de secuencia.
