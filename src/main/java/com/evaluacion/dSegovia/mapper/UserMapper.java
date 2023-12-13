@@ -12,6 +12,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",  uses = {PhoneMapper.class})
 public interface UserMapper {
+
     @Mappings({
             @Mapping(source = "phones", target = "phones")
     })

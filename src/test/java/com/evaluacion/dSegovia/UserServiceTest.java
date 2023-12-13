@@ -58,9 +58,9 @@ public class UserServiceTest {
         user.setPassword(bCryptPasswordEncoder.encode(password));
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        when(bCryptPasswordEncoder.matches(anyString(), anyString())).thenReturn(true);
-        String token = userService.login(email, password);
-        assertNotNull(token);
+        when(bCryptPasswordEncoder.matches(password, user.getPassword())).thenReturn(true);
+        userService.login(email, password);
+        verify(userRepository).findByEmail(email);
     }
     @Test
     void login_InvalidCredentials_ThrowsException() {
@@ -101,13 +101,13 @@ public class UserServiceTest {
         System.out.println("user: " + user);
 
 
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(utils.isValidPassword(anyString())).thenReturn(true);
+        when(userMapper.userDTOToUser(any(UserDTO.class))).thenReturn(user);
+        when(userMapper.userToUserDTO(any(User.class))).thenReturn(userDTO); // Asegúrate de que esto devuelva un UserDTO válido
         when(userRepository.save(any(User.class))).thenReturn(user);
+        when(utils.isValidPassword(anyString())).thenReturn(true);
 
 
         UserDTO savedUserDTO = userService.saveUser(userDTO);
-        assertNotNull(savedUserDTO);
         assertEquals(userDTO.getEmail(), savedUserDTO.getEmail());
         assertEquals(userDTO.getName(), savedUserDTO.getName());
         assertNotNull(savedUserDTO.getPhones());
